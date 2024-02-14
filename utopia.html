@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet">
+<title>utopia - Converter Dosa ke Saldo Dana</title>
+<style>
+  /* Tambahkan gaya CSS di sini */
+  *{
+  margin:0;
+  padding:0;
+  text-decoration:none;
+  }
+  body{
+    background:#280031;
+    color:#fff;
+  }
+  nav{
+    position:sticky;
+    display: flex;
+    top:0;
+    background: #32103a;
+    max-width:100%;
+    height:20px;
+    padding:20px;
+    border-bottom: 1px solid rgb(196 196 196);
+    justify-content:space-between;
+    align-items:center;
+  }
+  nav .logo{
+  font-size: 1.4rem;
+  font-weight:600;
+  }
+  nav a{
+    text-align: center;
+    background:#6242fc;
+    color:#fff;
+    border-radius: 42px;
+    border: none;
+    min-width: 60px;
+    height:15px;
+    padding: 10px;
+    cursor: pointer;
+    font-family: NotoSans-Regular,sans-serif;
+    font-size: .875rem;
+    outline: none;
+    box-shadow: -5px 5px 10px rgba(0,0,0,.16);
+  
+  }
+  .b1{
+    margin:12px 4%;
+  }
+  .input-dosa{
+    position: relative;
+    background: #fff;
+    color:#000;
+    border-radius:6px;
+    max-width: 100%;
+    padding:10px;
+    margin-top:30px;
+  }
+  .input-dosa textarea{
+    width:94%;
+    padding: 10px;
+  }
+  .dosa-no{
+    position:absolute;
+    width: 35px;
+    height: 35px;
+    font-size:1.5rem;
+    font-weight: 700;
+    border-radius: 50%;
+    background:#6242fc ;
+    color:#fff;
+    text-align:center;
+    border: 4px solid #fff;
+    top:-18px;
+    left:15px;
+  }
+  .head-box b{
+    margin-left: 55px;
+  }
+  .btn-pembayaran{
+    display: flex;
+    flex-direction:column;5px
+  }
+  .btn-pembayaran button{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px;
+    margin:5px;
+    border-radius:6px;
+    height:55px;
+    border:1px solid #b9aec5;
+    cursor: pointer;
+    background:transparent;
+  }
+  button img{
+    width: 90px;
+  }
+  button.convert{
+    background: #6242fc;
+    color: #fff;
+    width: 100%;
+    border:none;
+    border-radius:6px;
+    padding:10px;
+    cursor: pointer;
+  }
+  footer{
+    position:relative;
+    text-align:center;
+    padding:10px;
+    margin-top:60px;
+    bottom:0;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Utopia</div>
+      <a class="donas" href="#">login</a>
+    </nav>
+  </header>
+ <div class="b1">
+   <img width="100%" src="https://i.ibb.co/0CDp0dm/20240213-202353.jpg" style="margin-bottom:10px;border-radius:6px;"/>
+  <p class='p1'>Ubah dosa anda menjadi saldo dana atau saldo ewalet lainnya,masukkan dosa anda dan pisahkan dengan tanda koma (,) jika anda memiliki banyak dosa!</p>
+  <div class="input-dosa">
+    <div class="head-box"><span class="dosa-no">1</span><b>Masukkan dosa anda!</b></div>
+  <textarea id="dosaInput" rows="4" cols="50" placeholder="Masukkan dosa Anda di sini..."></textarea>
+  </div>
+  <br>
+<!-- Tombol "Convert Dosa" dengan id convertButton -->
+<button class="convert" id="convertButton" onclick="convertDosa()">Convert Dosa</button>
+  <br>
+  <div id="saldoDana"></div>
+  <br>
+  <div class="input-dosa">
+    <div class="head-box"><span class="dosa-no">2</span><b>Pilih metode pembayaran</b></div>
+  <div class="btn-pembayaran">
+<!-- Tambahkan atribut disabled pada tombol pembayaran -->
+<button id="danaButton" onclick="selectPayment('Dana')" disabled><img alt="dana" src="https://cdn1.codashop.com/S/content/common/images/mno/DANA_CHNL_LOGO.png"/><span>Rp.0</span></button>
+<button id="ovoButton" onclick="selectPayment('OVO')" disabled><img alt="ovo" src="https://cdn1.codashop.com/S/content/common/images/mno/OVO_CHNL_LOGO.png"/><span>Rp.0</span></button>
+<button id="gopayButton" onclick="selectPayment('GoPay')" disabled><img alt="gopay" src="https://cdn1.codashop.com/S/content/common/images/mno/GO_PAY_CHNL_LOGO.png"/><span>Rp.0</span></button>
+  </div>
+ </div>
+</div>
+<footer>
+  <p>©2024 - oleh Darma Tanaya</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
+
+<script>
+// Fungsi untuk mengubah angka menjadi format Rupiah
+function formatRupiah(angka) {
+    var reverse = angka.toString().split('').reverse().join('');
+    var ribuan = reverse.match(/\d{1,3}/g);
+    var hasil = ribuan.join('.').split('').reverse().join('');
+    return 'Rp ' + hasil;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Tambahkan event listener untuk tombol "Convert"
+    document.getElementById("convertButton").addEventListener("click", function() {
+        // Panggil fungsi convertDosa()
+        convertDosa();
+        // Aktifkan tombol pembayaran setelah mengklik tombol "Convert"
+        document.getElementById("danaButton").disabled = false;
+        document.getElementById("ovoButton").disabled = false;
+        document.getElementById("gopayButton").disabled = false;
+    });
+});
+
+function convertDosa() {
+    var dosaInput = document.getElementById("dosaInput").value;
+    // Periksa apakah formulir input kosong
+    if (dosaInput.trim() === '') {
+        Swal.fire({
+            icon: "error",
+            title: "Convert gagal...",
+            text: "Masukkan dosa anda sebelum klik convert",
+        });
+        return;
+    }
+    // Logika konversi dosa menjadi saldo dana
+    var saldo = Math.floor(Math.random() * (50000 - 1000 + 1)) + 1000; // saldo acak antara 1000 dan 500000
+    // Format jumlah saldo menjadi format mata uang
+    var saldoFormatted = formatRupiah(saldo);
+    document.getElementById("saldoDana").innerHTML = "<br>Jumlah saldo yang Anda dapatkan: " + saldoFormatted;
+    
+    // Tampilkan saldo di tombol penarikan Dana
+    document.getElementById("danaButton").innerHTML = `<img alt="dana" src="https://cdn1.codashop.com/S/content/common/images/mno/DANA_CHNL_LOGO.png"/> ${saldoFormatted}`;
+    // Tampilkan saldo di tombol penarikan OVO
+    document.getElementById("ovoButton").innerHTML = `<img alt="ovo" src="https://cdn1.codashop.com/S/content/common/images/mno/OVO_CHNL_LOGO.png"/> ${saldoFormatted}`;
+    // Tampilkan saldo di tombol penarikan GoPay
+    document.getElementById("gopayButton").innerHTML = `<img alt="gopay" src="https://cdn1.codashop.com/S/content/common/images/mno/GO_PAY_CHNL_LOGO.png"/> ${saldoFormatted}`;
+}
+
+function selectPayment(paymentMethod) {
+    Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Dosa anda terlalu berat,saldo tidak dapat dicairkan melalui " + paymentMethod,
+        footer: '<a href="#">pelajari lebih lanjut</a>'
+    });
+}
+</script>
+
+</body>
+</html>

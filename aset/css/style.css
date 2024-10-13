@@ -1,0 +1,402 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  scroll-behavior: smooth;
+}
+
+:root{
+    --white:#fff;
+    --black:#000;
+    --btnC:#d5a24c;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--white);
+}
+
+.navbar {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 7%;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: 0.3s;
+  z-index: 99999;
+}
+.navbar .navLogo {
+  font-family: "Merienda";
+  font-size: 1.5rem;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--black);
+}
+.navbar .navMenu a {
+  display: inline-block;
+  font-size: 16px;
+  margin: 12px;
+  color: var(--black);
+}
+.navbar .navMenu a:hover {
+  color: var(--bgC);
+}
+.navbar .navMenu a:after {
+  content: "";
+  display: block;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--bgC);
+  transform: scaleX(0);
+  transition: 0.2s linear;
+}
+.navbar .navMenu a:hover::after {
+  transform: scaleX(0.5);
+}
+.navIcon{
+display: none;
+}
+/*--[ Nav scroll ]--*/
+.scrolling-active{
+  background-color: var(--black);
+  background: var(--white);
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-image: url("/aset/image/home-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.hero .heroContent{
+    display: flex;
+    align-items: center;
+    padding: 20px 7%;
+}
+.hero .heroContent h1{
+    font-family: merienda;
+    font-size: 61px;
+    font-weight: 900;
+    line-height: 70px;
+}
+.hero .heroContent p{
+    font-family: poppins;
+    font-size: 18px;
+
+}
+.hero .heroContent h1,.hero .heroContent p{ margin-top: 10px;
+    margin-bottom: 20px;}
+.hero .heroContent .heroButton {
+       display: flex;
+    padding: 10px;
+    width: 200px;
+    border: 2px solid var(--black);
+    border-radius: 5px;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.5s;
+    background: transparent;
+}
+.hero .heroContent .heroButton:hover{
+    background: var(--btnC);
+    border-color: var(--btnC);
+}
+.hero .heroContent .right img{
+    width: 100%;
+}
+
+.katalog, .fitur,.faq{
+  background: #eef1f6;
+  padding: 100px 7%;
+}
+.katalog h1, .about h1, .fitur h1{
+  font-family: Poppins;
+  font-size: 44px;
+  margin-bottom: 10px;
+}
+.katalog p, .fitur p{
+ font-size: 18px;
+ margin-bottom: 40px;
+}
+.katalog h1, .katalog p, .fitur h1, .fitur p{text-align: center;}
+.katalog .slide-column{
+  position: relative;
+   overflow: hidden;
+   align-items: center;
+   margin-bottom: 40px;
+}
+.katalog .katalog-slide{
+       display: flex;
+     transition: transform 0.5s ease; 
+}
+.katalog-slide img{
+  width: 300px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.slide-prev, .slide-next {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    padding: 1rem;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+}
+.slide-prev {
+  top: 50%;
+  left: 2rem;
+  transform: translateY(-50%); /* Pusatkan secara vertikal */
+}
+.slide-next {
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%); /* Pusatkan secara vertikal */
+}
+.indicators {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0; /* Ruang antara slider dan indikator */
+}
+
+.indicator {
+    width: 10px; /* Ukuran indikator */
+    height: 10px; /* Ukuran indikator */
+    border-radius: 50%; /* Bentuk bulat */
+    background-color: #bbb; /* Warna indikator tidak aktif */
+    margin: 0 5px; /* Ruang antar indikator */
+    cursor: pointer; /* Tunjukkan bahwa indikator dapat diklik */
+}
+
+.indicator.active {
+    background-color: #717171; /* Warna indikator aktif */
+}
+.katalogBtn{
+      display: flex;
+    padding: 10px;
+    width: 200px;
+    border: 2px solid var(--black);
+    border-radius: 5px;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.5s;
+    background: transparent;
+    margin: 0 auto;
+}
+.about {
+    padding: 100px 7%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.about h1 {
+    max-width: 77%;
+}
+.aboutusContent {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 70px auto 0;
+    max-width: 1150px;
+}
+.feature {
+    flex: 58 0 50%;
+    display: flex;
+    align-items: center;
+    padding: 0 15px 15px;
+}
+svg.feather.feather-check-circle {
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+    flex-shrink: 0;
+    margin-right: 25px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fed267 0%, #cf9b48 100%);
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0px 6px 10px 0px rgb(227 180 88 / 20%);
+}
+
+/* Fitur */
+.fitur p {
+    margin-bottom: 125px;
+}
+.featured {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.featured li {
+    position: relative;
+    width: 32%;
+    margin-bottom: 15px;
+}
+.featuredSc-content {
+    text-align: center;
+    height: 100%;
+    display: block;
+    position: relative;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.9);
+    padding: 25px 20px 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px 0 rgba(9,32,76,0.05);
+    margin: 0;
+    flex: 1;
+}
+.featuredSc-title {
+    font-weight: 700;
+    line-height: 1.48em;
+    font-size: 18px;
+    color: #161617;
+}
+.featuredSc-content .content {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.48em;
+}
+.featuredSc-content svg {
+    margin: 10px;
+    padding: 10px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fed267 0%, #cf9b48 100%);
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0px 6px 10px 0px rgb(227 180 88 / 20%);
+}
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    font-family: "Sora", sans-serif;
+    max-width: 991px;
+    min-width: 320px;
+    margin: 50px auto;
+    padding: 0 50px;
+}
+.accordion h1 {
+    font-size: 32px;
+    text-align: center;
+}
+.accordion-item {
+    margin-top: 16px;
+    border: 1px solid #fcfcfc;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+.accordion-item .accordion-item-title {
+    position: relative;
+    margin: 0;
+    display: flex;
+    width: 100%;
+    font-size: 15px;
+    cursor: pointer;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    padding: 14px 20px;
+    box-sizing: border-box;
+    align-items: center;
+}
+.accordion-item .accordion-item-desc {
+    display: none;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 300;
+    color: #444;
+    border-top: 1px dashed #ddd;
+    padding: 10px 20px 20px;
+    box-sizing: border-box;
+}
+.accordion-item input[type="checkbox"] {
+    position: absolute;
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+.accordion-item input[type="checkbox"]:checked ~ .accordion-item-desc {
+    display: block;
+}
+.accordion-item
+    input[type="checkbox"]:checked
+    ~ .accordion-item-title
+    .icon:after {
+    content: "-";
+    font-size: 20px;
+}
+.accordion-item input[type="checkbox"] ~ .accordion-item-title .icon:after {
+    content: "+";
+    font-size: 20px;
+}
+.accordion-item:first-child {
+    margin-top: 0;
+}
+.accordion-item .icon {
+    margin-left: 14px;
+}
+
+@media screen and (max-width: 767px) {
+    .accordion {
+        padding: 0 16px;
+    }
+    .accordion h1 {
+        font-size: 22px;
+    }
+}
+
+/*--[ Responsive ]--*/
+@media screen and (max-width: 600px) {
+.navIcon{
+    display: block;
+}
+/* css navmenu */
+.navMenu {
+  position: absolute;
+  top: 55px;
+  right: -100%;
+  background: #fff;
+  width: 250px;
+  height: 100vh;
+  border-radius: 10px 0 0 10px;
+  transition: 0.4s;
+  padding: 15px;
+}
+.navMenu.active {
+  right: 0;
+}
+.navbar .navMenu a::after {
+  transform-origin: 0 0;
+}
+.navbar .navMenu a {
+  display: block;
+  color: var(--bg);
+}
+
+#menu {
+  display: inline-block;
+}
+.hero .heroContent{
+    flex-direction:column;
+}
+.hero .herocontent h1{
+  font-size: 15px;
+}
+}
